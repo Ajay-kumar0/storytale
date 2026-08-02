@@ -57,6 +57,18 @@ async def generate_story(
 
     return chapter
 
+@router.get("/")
+async def get_all_stories(
+    current_user=Depends(get_current_user),
+):
+
+    stories = await StoryService.get_user_stories(
+        str(current_user["_id"])
+    )
+
+    return stories
+
+
 @router.get("/{story_id}")
 async def get_story(
     story_id: str,
@@ -93,3 +105,4 @@ async def continue_story(
         )
 
     return chapter
+

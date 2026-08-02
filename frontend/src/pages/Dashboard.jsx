@@ -1,33 +1,31 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/layout/Navbar";
 import StoryCard from "../components/story/StoryCard";
 import Button from "../components/ui/Button";
 
+import { getStories } from "../services/storyService";
+
 export default function Dashboard() {
 
     const navigate = useNavigate();
 
-    const stories = [
-        {
-            id: 1,
-            title: "The Dragon's Curse",
-            genre: "Fantasy",
-            chapter: 8,
-        },
-        {
-            id: 2,
-            title: "Cyber Hunter",
-            genre: "Sci-Fi",
-            chapter: 5,
-        },
-        {
-            id: 3,
-            title: "Haunted Manor",
-            genre: "Horror",
-            chapter: 2,
-        },
-    ];
+    const [stories, setStories] = useState([]);
+
+    useEffect(() => {
+        loadStories();
+    }, []);
+
+    const loadStories = async () => {
+        try {
+            const data = await getStories();
+            console.log("Stories:", data);
+            setStories(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-slate-950">
@@ -39,7 +37,6 @@ export default function Dashboard() {
                 <div className="flex justify-between items-center">
 
                     <div>
-
                         <h1 className="text-4xl text-white font-bold">
                             Welcome Back
                         </h1>
@@ -47,7 +44,6 @@ export default function Dashboard() {
                         <p className="text-slate-400 mt-2">
                             Continue your adventure or create a new one.
                         </p>
-
                     </div>
 
                     <Button onClick={() => navigate("/create-story")}>
@@ -64,10 +60,8 @@ export default function Dashboard() {
 
                     {stories.map((story) => (
                         <StoryCard
-                            key={story.id}
-                            title={story.title}
-                            genre={story.genre}
-                            chapter={story.chapter}
+                            key={story._id}
+                            story={story}
                         />
                     ))}
 

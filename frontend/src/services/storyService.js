@@ -1,5 +1,7 @@
 import api from "./api";
 
+
+
 export const createStory = async (data) => {
     const response = await api.post("/stories", data);
     return response.data;
@@ -16,7 +18,7 @@ export const getStory = async (storyId) => {
 };
 
 export const getStories = async () => {
-    const response = await api.get("/stories");
+    const response = await api.get("/stories/");
     return response.data;
 };
 

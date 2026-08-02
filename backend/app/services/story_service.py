@@ -6,7 +6,7 @@ from app.repositories.story_repository import StoryRepository
 from app.services.ai_service import AIService
 from app.repositories.chapter_repository import ChapterRepository
 from app.utils.serializer import serialize_doc
-
+from app.utils.serializer import serialize_docs
 
 class StoryService:
 
@@ -111,3 +111,12 @@ class StoryService:
         await ChapterRepository.create(chapter_doc)
 
         return new_chapter
+
+    @staticmethod
+    async def get_user_stories(user_id: str):
+
+        stories = await StoryRepository.get_all_by_user(
+            user_id
+        )
+
+        return serialize_docs(stories)

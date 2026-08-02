@@ -23,3 +23,16 @@ class StoryRepository:
                 "_id": ObjectId(story_id)
             }
         )
+    
+    @staticmethod
+    async def get_all_by_user(user_id: str):
+
+        db = get_database()
+
+        stories = await db["stories"].find(
+            {
+                "user_id": user_id
+            }
+        ).sort("created_at", -1).to_list(None)
+
+        return stories
