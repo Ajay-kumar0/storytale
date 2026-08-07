@@ -1,22 +1,30 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.dependencies.auth import get_current_user
-from app.schemas.story import StoryCreate, StoryResponse
+
+from app.schemas.chapter import GenerateChapterResponse, StoryDetailResponse
+from app.schemas.story import (
+    StoryCreate,
+    StoryResponse,
+    ContinueStoryRequest,
+)
+
+
+
 from app.services.story_service import StoryService
-from fastapi import HTTPException
-from app.schemas.story import ContinueStoryRequest
+
 
 
 router = APIRouter(
     prefix="/stories",
-    tags=["Stories"]
+    tags=["Stories"],
 )
 
 
 @router.post(
     "",
     response_model=StoryResponse,
-    status_code=201
+    status_code=201,
 )
 async def create_story(
     story: StoryCreate,
@@ -39,23 +47,25 @@ async def create_story(
     }
 
 
-# ---------- ADD THIS BELOW ----------
-
-@router.post("/{story_id}/generate")
+@router.post("/{story_id}/generate", response_model=GenerateChapterResponse)
 async def generate_story(
     story_id: str,
     current_user=Depends(get_current_user),
 ):
 
-    chapter = await StoryService.generate_story(story_id)
+    chapter = await StoryService.generate_story(
+        story_id,
+        user_id=str(current_user["_id"]),
+    )
 
     if chapter is None:
         raise HTTPException(
             status_code=404,
-            detail="Story not found"
+            detail="Story not found",
         )
 
     return chapter
+
 
 @router.get("/")
 async def get_all_stories(
@@ -69,24 +79,27 @@ async def get_all_stories(
     return stories
 
 
-@router.get("/{story_id}")
+@router.get("/{story_id}", response_model=StoryDetailResponse)
 async def get_story(
     story_id: str,
     current_user=Depends(get_current_user),
 ):
 
-    story = await StoryService.get_story(story_id)
+    story = await StoryService.get_story(
+        story_id,
+        user_id=str(current_user["_id"]),
+    )
 
     if story is None:
         raise HTTPException(
             status_code=404,
-            detail="Story not found"
+            detail="Story not found",
         )
 
     return story
 
 
-@router.post("/{story_id}/continue")
+@router.post("/{story_id}/continue", response_model=GenerateChapterResponse)
 async def continue_story(
     story_id: str,
     request: ContinueStoryRequest,
@@ -96,6 +109,7 @@ async def continue_story(
     chapter = await StoryService.continue_story(
         story_id,
         request.choice_id,
+        user_id=str(current_user["_id"]),
     )
 
     if chapter is None:
@@ -105,4 +119,3 @@ async def continue_story(
         )
 
     return chapter
-

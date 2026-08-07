@@ -1,16 +1,16 @@
-from openai import OpenAI
+from openai import AsyncOpenAI
 
 from app.core.config import settings
 
-client = OpenAI(
+client = AsyncOpenAI(
     base_url="https://openrouter.ai/api/v1",
     api_key=settings.OPENROUTER_API_KEY,
 )
 
 
-def generate_story(prompt: str):
+async def generate_story(prompt: str):
 
-    completion = client.chat.completions.create(
+    completion = await client.chat.completions.create(
         model=settings.OPENROUTER_MODEL,
         messages=[
             {

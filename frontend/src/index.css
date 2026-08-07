@@ -1,1 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
+
+html,
+body {
+    background-color: #020617; /* slate-950 -- avoids a white flash before React mounts */
+}
+
+body {
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+    background-color: #2563eb; /* blue-600 */
+    color: #fff;
+}
+
+/* Dark, unobtrusive scrollbar to match the rest of the theme */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020617; /* slate-950 */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #334155; /* slate-700 */
+    border-radius: 9999px;
+    border: 2px solid #020617;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #475569; /* slate-600 */
+}
+
+* {
+    scrollbar-color: #334155 #020617;
+    scrollbar-width: thin;
+}

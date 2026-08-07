@@ -3,6 +3,14 @@ import os
 
 load_dotenv()
 
+REQUIRED_VARS = (
+    "MONGO_URL",
+    "DATABASE_NAME",
+    "JWT_SECRET",
+    "JWT_ALGORITHM",
+    "OPENROUTER_API_KEY",
+)
+
 
 class Settings:
     MONGO_URL = os.getenv("MONGO_URL")
@@ -24,4 +32,22 @@ class Settings:
         "deepseek/deepseek-chat-v3.1:free"
     )
 
+    # Comma-separated list in the env, e.g.
+    # CORS_ORIGINS=http://localhost:5173,https://your-frontend.com
+    CORS_ORIGINS = [
+        origin.strip()
+        for origin in os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")
+        if origin.strip()
+    ]
+
+    def validate(self):
+        missing = [name for name in REQUIRED_VARS if not getattr(self, name)]
+        if missing:
+            raise RuntimeError(
+                f"Missing required environment variable(s): {', '.join(missing)}. "
+                "Check your .env file against .env.example."
+            )
+
+
 settings = Settings()
+settings.validate()

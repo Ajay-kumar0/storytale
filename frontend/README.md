@@ -1,16 +1,42 @@
-# React + Vite
+# StoryForge AI — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend for an AI-generated, choice-based interactive story game.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + React Router
+- Tailwind CSS 4
+- Axios (with auth token injection + auto logout on session expiry)
+- react-hot-toast for notifications
+- Browser SpeechSynthesis API for the "read story aloud" feature
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+cp .env.example .env   # point VITE_API_BASE_URL at your backend
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## Project layout
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+  components/
+    auth/      # route guards (ProtectedRoute, PublicOnlyRoute)
+    layout/    # Navbar
+    player/    # PlayerCard, StatBar
+    story/     # StoryCard
+    ui/        # Button, LoadingScreen
+  context/     # AuthContext -- single source of truth for the auth token
+  pages/       # one component per route
+  services/    # axios instance + API calls, grouped by resource
+```
+
+## Notes
+
+- Requires the backend to be running -- see its own README for setup.
+- `VITE_API_BASE_URL` in `.env` should point at your backend's URL (no trailing slash).
+- Auth state lives in `AuthContext`, backed by a token in `localStorage`. Routes under
+  `ProtectedRoute` redirect to `/` if there's no token; `/` and `/register` redirect to
+  `/dashboard` if there already is one.

@@ -8,7 +8,7 @@ class AIService:
     @staticmethod
     async def generate_story(story: dict):
 
-        return generate_first_chapter(story)
+        return await generate_first_chapter(story)
 
     @staticmethod
     async def continue_story(
@@ -16,7 +16,7 @@ class AIService:
         chapter: dict,
         selected_choice: dict,
     ):
-        return generate_next_chapter(
+        return await generate_next_chapter(
             story,
             chapter,
             selected_choice,

@@ -26,46 +26,73 @@ def build_story_prompt(story: dict) -> str:
             }
         ],
         "player": {
-            "health": 100,
-            "mana": 50,
-            "gold": 20,
-            "xp": 0
-        },
-        "inventory": [],
-        "quest": {
-            "title": "",
-            "completed": False
+            "health": 100
         }
     }
 
     return f"""
-You are an expert RPG game master.
+You are an expert interactive story writer.
 
-Generate the FIRST chapter of an interactive RPG.
+Write the FIRST chapter of an adventure game.
 
-Story Title: {story['title']}
+Story Details
+
+Title: {story['title']}
 Genre: {story['genre']}
 World: {story['world']}
 Character Name: {story['character_name']}
 Character Class: {story['character_class']}
 Difficulty: {story['difficulty']}
 
-Rules:
+Writing Rules
 
-1. Return ONLY JSON.
-2. Do NOT write markdown.
-3. Do NOT use ```json.
-4. Story should be 250-400 words.
-5. Give exactly four choices.
-6. Every choice should significantly change the story.
-7. Keep player stats realistic.
+- Write in simple English.
+- Use short sentences.
+- Avoid difficult words.
+- Keep paragraphs short (2-4 lines).
+- Write like an adventure game, not a novel.
+- Make the story exciting and easy to understand.
+- Show actions and dialogue instead of long descriptions.
+- Write about 180 words.
+- If an action scene is happening, you may write up to 250 words.
+- End with exactly 4 meaningful choices.
+- Every choice should lead to a different situation.
 
-Return exactly this JSON format:
+Story Structure
+
+1. Start with a small action or interesting event.
+2. Describe what the player sees.
+3. Add one challenge, mystery, or danger.
+4. End with suspense.
+5. Give exactly four meaningful choices.
+
+Choice Rules
+
+- Every choice should feel unique.
+- One choice should be safe.
+- One choice should be risky.
+- One choice should explore something new.
+- One choice should interact with a person or object.
+
+Health Rules
+
+- The player starts with 100 health.
+- Do NOT change health in the first chapter.
+- Never make health above 100.
+- Never make health below 0.
+- Set "game_over" to false.
+
+Response Rules
+
+- Return ONLY valid JSON.
+- Do NOT use markdown.
+- Do NOT use ```json.
+- Do NOT write any explanation.
+
+Return exactly this JSON:
 
 {json.dumps(schema, indent=2)}
 """
-
-import json
 
 
 def build_continue_prompt(
@@ -97,51 +124,87 @@ def build_continue_prompt(
             }
         ],
         "player": {
-            "health": chapter["player"]["health"],
-            "mana": chapter["player"]["mana"],
-            "gold": chapter["player"]["gold"],
-            "xp": chapter["player"]["xp"]
-        },
-        "inventory": chapter["inventory"],
-        "quest": chapter["quest"]
+            "health": chapter["player"]["health"]
+        }
     }
 
     return f"""
-You are an expert RPG Game Master.
+You are an expert interactive story writer.
 
-You are CONTINUING an existing story.
+Continue the adventure naturally.
 
-Story Title:
-{story["title"]}
+Story Information
 
-Genre:
-{story["genre"]}
+Title: {story["title"]}
+Genre: {story["genre"]}
+World: {story["world"]}
 
-World:
-{story["world"]}
-
-Previous Chapter:
+Previous Chapter
 
 {chapter["story"]}
 
-The player selected:
+Player's Choice
 
 {selected_choice["text"]}
 
-Rules:
+Writing Rules
 
-1. Continue the story naturally.
-2. Continue from the previous chapter.
-3. Return ONLY valid JSON.
-4. Do NOT use markdown.
-5. Do NOT use ```json.
-6. Story length should be 250-400 words.
-7. Give EXACTLY four choices.
-8. Preserve inventory.
-9. Preserve player stats unless something changes.
-10. Preserve quest unless story changes it.
+- Continue from the previous chapter.
+- Write in simple English.
+- Use short sentences.
+- Keep paragraphs short (2-4 lines).
+- Focus on actions and dialogue.
+- Keep the story exciting.
+- Write about 180 words.
+- If an action scene is happening, you may write up to 250 words.
+- End with exactly 4 new choices.
 
-Return EXACTLY this JSON format:
+Story Structure
+
+1. Start with a small action or interesting event.
+2. Describe what the player sees.
+3. Add one challenge, mystery, or danger.
+4. End with suspense.
+5. Give exactly four meaningful choices.
+
+Choice Rules
+
+- Every choice should feel unique.
+- One choice should be safe.
+- One choice should be risky.
+- One choice should explore something new.
+- One choice should interact with a person or object.
+
+Health Rules
+
+- Safe choices usually do not reduce health.
+- Dangerous situations reduce health by 5-30.
+- Serious battles may reduce health by 20-40.
+- Resting, healing, medicine, or friendly help may recover 5-20 health.
+- Never make health above 100.
+- Never make health below 0.
+
+Game Over Rules
+
+- If health becomes 0:
+    - End the story immediately.
+    - Do NOT generate choices.
+    - Set:
+      "game_over": true
+
+- Otherwise:
+    - Generate four choices.
+    - Set:
+      "game_over": false
+
+Response Rules
+
+- Return ONLY valid JSON.
+- Do NOT use markdown.
+- Do NOT use ```json.
+- Do NOT write any explanation.
+
+Return exactly this JSON:
 
 {json.dumps(schema, indent=2)}
 """

@@ -36,3 +36,18 @@ export const continueStory = async (
 
     return response.data;
 };
+export const translateStory = async (
+    text,
+    language,
+) => {
+
+    const response = await api.post(
+        "/translate",
+        {
+            text,
+            language,
+        }
+    );
+
+    return response.data;
+};

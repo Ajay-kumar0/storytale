@@ -14,8 +14,6 @@ class StoryRepository:
     @staticmethod
     async def get_by_id(story_id: str):
 
-        from bson import ObjectId
-
         db = get_database()
 
         return await db["stories"].find_one(

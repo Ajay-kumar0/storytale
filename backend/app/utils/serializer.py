@@ -1,6 +1,3 @@
-from bson import ObjectId
-
-
 def serialize_doc(doc):
 
     if doc is None:

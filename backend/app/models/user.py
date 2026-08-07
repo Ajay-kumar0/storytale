@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 def create_user_document(
@@ -10,5 +10,5 @@ def create_user_document(
         "username": username,
         "email": email,
         "password": hashed_password,
-        "created_at": datetime.utcnow()
+        "created_at": datetime.now(timezone.utc)
     }

@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 def create_chapter_document(
@@ -12,7 +12,6 @@ def create_chapter_document(
         "story": chapter_data["story"],
         "choices": chapter_data["choices"],
         "player": chapter_data["player"],
-        "inventory": chapter_data["inventory"],
-        "quest": chapter_data["quest"],
-        "created_at": datetime.utcnow()
+        "game_over": chapter_data.get("game_over", False),
+        "created_at": datetime.now(timezone.utc)
     }

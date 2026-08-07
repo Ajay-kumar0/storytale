@@ -1,13 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { createStory, generateStory } from "../services/storyService";
+import LoadingScreen from "../components/ui/LoadingScreen";
+
+import {
+    Sparkles,
+    BookOpen,
+    Globe,
+    User,
+    Shield,
+    Swords,
+} from "lucide-react";
+
+import {
+    createStory,
+    generateStory,
+} from "../services/storyService";
 
 export default function CreateStory() {
+
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
-
 
     const [form, setForm] = useState({
         title: "",
@@ -19,10 +33,12 @@ export default function CreateStory() {
     });
 
     const handleChange = (e) => {
+
         setForm({
             ...form,
             [e.target.name]: e.target.value,
         });
+
     };
 
     const handleSubmit = async () => {
@@ -41,19 +57,19 @@ export default function CreateStory() {
 
             setLoading(true);
 
-            toast.loading("Creating story...", {
+            toast.loading("Creating your adventure...", {
                 id: "story",
             });
 
             const story = await createStory(form);
 
-            toast.loading("Generating AI adventure...", {
+            toast.loading("AI is writing your story...", {
                 id: "story",
             });
 
             await generateStory(story.story_id);
 
-            toast.success("Adventure Created!", {
+            toast.success("Adventure Ready!", {
                 id: "story",
             });
 
@@ -69,94 +85,177 @@ export default function CreateStory() {
                 }
             );
 
-        } finally {
-
             setLoading(false);
 
         }
 
     };
 
+    if (loading) {
+
+        return (
+            <LoadingScreen
+                title="Creating your adventure..."
+                subtitle="Our AI is building your world. This may take a few seconds."
+            />
+        );
+
+    }
+
     return (
 
-        <div className="min-h-screen bg-slate-950 flex justify-center items-center">
+        <div className="min-h-screen bg-slate-950 flex items-center justify-center px-6 py-10">
 
-            <div className="bg-slate-900 p-10 rounded-xl w-full max-w-xl">
+            <div className="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl p-10">
 
-                <h1 className="text-white text-3xl font-bold mb-8">
-                    Create Story
-                </h1>
+                <div className="flex items-center gap-3 mb-8">
 
-                <input
-                    className="w-full p-3 rounded mb-4"
-                    placeholder="Story Title"
-                    name="title"
-                    value={form.title}
-                    onChange={handleChange}
-                />
+                    <Sparkles
+                        size={34}
+                        className="text-blue-500"
+                    />
 
-                <select
-                    className="w-full p-3 rounded mb-4"
-                    name="genre"
-                    value={form.genre}
-                    onChange={handleChange}
-                >
-                    <option>Fantasy</option>
-                    <option>Horror</option>
-                    <option>Sci-Fi</option>
-                    <option>Mystery</option>
-                    <option>Cyberpunk</option>
-                </select>
+                    <div>
 
-                <select
-                    className="w-full p-3 rounded mb-4"
-                    name="world"
-                    value={form.world}
-                    onChange={handleChange}
-                >
-                    <option>Ancient Kingdom</option>
-                    <option>Haunted City</option>
-                    <option>Future Earth</option>
-                    <option>Lost Island</option>
-                </select>
+                        <h1 className="text-4xl font-bold text-white">
+                            Create Your Adventure
+                        </h1>
 
-                <input
-                    className="w-full p-3 rounded mb-4"
-                    placeholder="Character Name"
-                    name="character_name"
-                    value={form.character_name}
-                    onChange={handleChange}
-                />
+                        <p className="text-slate-400 mt-1">
+                            Design your hero and let AI build your story.
+                        </p>
 
-                <select
-                    className="w-full p-3 rounded mb-4"
-                    name="character_class"
-                    value={form.character_class}
-                    onChange={handleChange}
-                >
-                    <option>Knight</option>
-                    <option>Mage</option>
-                    <option>Archer</option>
-                    <option>Assassin</option>
-                </select>
+                    </div>
 
-                <select
-                    className="w-full p-3 rounded mb-6"
-                    name="difficulty"
-                    value={form.difficulty}
-                    onChange={handleChange}
-                >
-                    <option>Easy</option>
-                    <option>Medium</option>
-                    <option>Hard</option>
-                </select>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+
+                    <div>
+
+                        <label className="text-slate-300 mb-2 flex items-center gap-2">
+                            <BookOpen size={18} />
+                            Story Title
+                        </label>
+
+                        <input
+                            className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white outline-none focus:border-blue-500"
+                            placeholder="The Lost Kingdom"
+                            name="title"
+                            value={form.title}
+                            onChange={handleChange}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className="text-slate-300 mb-2 flex items-center gap-2">
+                            <User size={18} />
+                            Character Name
+                        </label>
+
+                        <input
+                            className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white outline-none focus:border-blue-500"
+                            placeholder="Arthur"
+                            name="character_name"
+                            value={form.character_name}
+                            onChange={handleChange}
+                        />
+
+                    </div>
+
+                    <div>
+
+                        <label className="text-slate-300 mb-2">
+                            Genre
+                        </label>
+
+                        <select
+                            className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white"
+                            name="genre"
+                            value={form.genre}
+                            onChange={handleChange}
+                        >
+                            <option>Fantasy</option>
+                            <option>Horror</option>
+                            <option>Sci-Fi</option>
+                            <option>Mystery</option>
+                            <option>Cyberpunk</option>
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label className="text-slate-300 mb-2 flex items-center gap-2">
+                            <Globe size={18} />
+                            World
+                        </label>
+
+                        <select
+                            className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white"
+                            name="world"
+                            value={form.world}
+                            onChange={handleChange}
+                        >
+                            <option>Ancient Kingdom</option>
+                            <option>Haunted City</option>
+                            <option>Future Earth</option>
+                            <option>Lost Island</option>
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label className="text-slate-300 mb-2 flex items-center gap-2">
+                            <Shield size={18} />
+                            Character Class
+                        </label>
+
+                        <select
+                            className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white"
+                            name="character_class"
+                            value={form.character_class}
+                            onChange={handleChange}
+                        >
+                            <option>Knight</option>
+                            <option>Mage</option>
+                            <option>Archer</option>
+                            <option>Assassin</option>
+                        </select>
+
+                    </div>
+
+                    <div>
+
+                        <label className="text-slate-300 mb-2 flex items-center gap-2">
+                            <Swords size={18} />
+                            Difficulty
+                        </label>
+
+                        <select
+                            className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 text-white"
+                            name="difficulty"
+                            value={form.difficulty}
+                            onChange={handleChange}
+                        >
+                            <option>Easy</option>
+                            <option>Medium</option>
+                            <option>Hard</option>
+                        </select>
+
+                    </div>
+
+                </div>
 
                 <button
                     onClick={handleSubmit}
                     disabled={loading}
-                    className="bg-blue-600 hover:bg-blue-700 text-white w-full p-3 rounded disabled:opacity-50"
+                    className="mt-10 w-full bg-blue-600 hover:bg-blue-700 rounded-xl py-4 text-lg font-semibold transition"
                 >
-                    {loading ? "Generating..." : "Generate Adventure"}
+                    Start Adventure
                 </button>
 
             </div>
@@ -164,4 +263,5 @@ export default function CreateStory() {
         </div>
 
     );
+
 }

@@ -1,30 +1,63 @@
 from app.ai.json_parser import parse_story
 from app.ai.llm_client import generate_story
-from app.ai.prompt_builder import build_story_prompt
-from app.ai.prompt_builder import build_continue_prompt
+from app.ai.prompt_builder import (
+    build_story_prompt,
+    build_continue_prompt,
+)
 
 
-def generate_first_chapter(story: dict):
+def normalize_chapter(chapter: dict):
 
-    prompt = build_story_prompt(story)
+    # Ensure player exists
+    if "player" not in chapter:
+        chapter["player"] = {}
 
-    response = generate_story(prompt)
+    # Ensure health exists
+    health = chapter["player"].get("health", 100)
 
-    chapter = parse_story(response)
+    # Keep health between 0 and 100
+    health = max(0, min(100, health))
+
+    chapter["player"]["health"] = health
+
+    # Game over logic
+    if health == 0:
+
+        chapter["game_over"] = True
+        chapter["choices"] = []
+
+    else:
+
+        chapter["game_over"] = False
 
     return chapter
 
-def generate_next_chapter(
+
+async def generate_first_chapter(story: dict):
+
+    prompt = build_story_prompt(story)
+
+    response = await generate_story(prompt)
+
+    chapter = parse_story(response)
+
+    return normalize_chapter(chapter)
+
+
+async def generate_next_chapter(
     story: dict,
     chapter: dict,
     selected_choice: dict,
 ):
+
     prompt = build_continue_prompt(
         story,
         chapter,
         selected_choice,
     )
 
-    response = generate_story(prompt)
+    response = await generate_story(prompt)
 
-    return parse_story(response)
+    new_chapter = parse_story(response)
+
+    return normalize_chapter(new_chapter)

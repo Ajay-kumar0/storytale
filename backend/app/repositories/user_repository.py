@@ -1,15 +1,15 @@
-from app.db.database import get_user_collection
+from app.db.mongodb import get_database
 
 
 class UserRepository:
 
     @staticmethod
     async def get_by_email(email: str):
-        users = get_user_collection()
-        return await users.find_one({"email": email})
+        db = get_database()
+        return await db["users"].find_one({"email": email})
 
     @staticmethod
     async def create(user: dict):
-        users = get_user_collection()
-        result = await users.insert_one(user)
+        db = get_database()
+        result = await db["users"].insert_one(user)
         return result
