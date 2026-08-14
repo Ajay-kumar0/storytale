@@ -19,7 +19,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="StoryForge AI",
+    title="StoryTale",
     version="1.0.0",
     lifespan=lifespan,
 )
@@ -58,6 +58,6 @@ app.include_router(translate_router)
 @app.get("/")
 def home():
     return {
-        "message": "StoryForge AI Backend is Running",
+        "message": "StoryTale Backend is Running",
         "status": "success",
     }

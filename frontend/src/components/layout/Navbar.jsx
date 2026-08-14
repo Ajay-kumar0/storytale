@@ -33,7 +33,7 @@ export default function Navbar() {
                     />
 
                     <h1 className="font-display text-2xl font-semibold text-ash-100 tracking-tight">
-                        StoryForge AI
+                        StoryTale
                     </h1>
 
                 </div>

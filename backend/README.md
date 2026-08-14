@@ -1,4 +1,4 @@
-# StoryForge AI — Backend
+# StoryTale — Backend
 
 FastAPI + MongoDB backend for an AI-generated, choice-based interactive story game.
 

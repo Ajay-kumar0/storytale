@@ -1,4 +1,4 @@
-# StoryForge AI — Frontend
+# StoryTale — Frontend
 
 React + Vite frontend for an AI-generated, choice-based interactive story game.
 

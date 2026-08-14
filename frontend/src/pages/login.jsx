@@ -73,7 +73,7 @@ export default function Login() {
                 <div className="flex flex-col items-center mb-8">
                     <Flame size={40} className="text-ember-500 mb-3" />
                     <h1 className="font-display text-3xl font-semibold text-ash-100">
-                        StoryForge AI
+                        StoryTale
                     </h1>
                     <p className="text-ash-300 mt-2 text-center">
                         Welcome back, adventurer.
