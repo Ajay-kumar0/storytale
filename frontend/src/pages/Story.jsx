@@ -6,6 +6,8 @@ import {
     Pause,
     Square,
     LoaderCircle,
+    ArrowRight,
+    Languages,
 } from "lucide-react";
 
 import {
@@ -121,6 +123,7 @@ export default function Story() {
         setIsPaused(false);
 
     };
+
     const changeLanguage = async (lang) => {
 
         if (lang === language) return;
@@ -150,6 +153,7 @@ export default function Story() {
         } catch (err) {
 
             console.error(err);
+            toast.error("Translation failed");
 
         } finally {
 
@@ -237,25 +241,25 @@ export default function Story() {
     if (!storyData?.chapter) {
 
         return (
-            <div className="min-h-screen bg-slate-950">
+            <div className="min-h-screen bg-ink-950">
 
                 <Navbar />
 
                 <div className="flex items-center justify-center px-6 py-20">
-                    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-10 max-w-md text-center">
+                    <div className="bg-ink-900 border border-ink-700 rounded-2xl p-10 max-w-md text-center">
 
-                        <h2 className="text-2xl font-bold text-white">
+                        <h2 className="font-display text-2xl font-semibold text-ash-100">
                             This story hasn't started yet
                         </h2>
 
-                        <p className="text-slate-400 mt-3">
+                        <p className="text-ash-300 mt-3">
                             Its first chapter failed to generate. You can try again.
                         </p>
 
                         <button
                             onClick={retryGenerate}
                             disabled={retrying}
-                            className="mt-8 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 px-6 py-3 rounded-xl font-semibold transition"
+                            className="mt-8 bg-gradient-to-b from-ember-400 to-ember-500 hover:shadow-[0_0_20px_rgba(232,98,44,0.4)] disabled:opacity-50 text-ink-950 px-6 py-3 rounded-xl font-semibold transition-all"
                         >
                             {retrying ? "Generating..." : "Generate First Chapter"}
                         </button>
@@ -269,7 +273,7 @@ export default function Story() {
 
     return (
 
-        <div className="min-h-screen bg-slate-950 text-white">
+        <div className="min-h-screen bg-ink-950 text-ash-100">
 
             <Navbar />
 
@@ -281,176 +285,212 @@ export default function Story() {
 
                     <div className="lg:col-span-2">
 
-                        <h1 className="text-5xl font-bold">
+                        <h1 className="font-display text-5xl font-semibold">
                             {storyData.story.title}
                         </h1>
 
-                        <p className="text-slate-400 mt-3">
+                        <p className="text-ash-300 mt-3 text-sm uppercase tracking-wider font-medium">
                             {storyData.story.genre}
-                            {" • "}
+                            <span className="text-ember-500 mx-2">&bull;</span>
                             {storyData.story.character_name}
-                            {" • "}
+                            <span className="text-ember-500 mx-2">&bull;</span>
                             Chapter {storyData.chapter.chapter}
                         </p>
 
-                        <div className="mt-8 bg-slate-900 border border-slate-800 rounded-2xl shadow-xl p-10">
+                        <div className="mt-8 relative bg-ink-900 border border-ink-700 rounded-2xl shadow-xl overflow-hidden">
 
-                            <div className="flex justify-between items-center mb-8">
+                            {/* Illuminated top edge */}
+                            <div className="h-1 bg-gradient-to-r from-ember-600 via-ember-400 to-ember-600" />
 
-                                <h2 className="text-3xl font-bold">
-                                    {storyData.chapter.title}
-                                </h2>
-                                <div className="flex gap-2 mt-3">
+                            <div className="p-10">
 
-                                    <button
-                                        onClick={() => changeLanguage("English")}
-                                        className={`px-3 py-1 rounded ${
-                                            language === "English"
-                                                ? "bg-blue-600"
-                                                : "bg-slate-700"
-                                        }`}
-                                    >
-                                        English
-                                    </button>
+                                <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
 
-                                    <button
-                                        onClick={() => changeLanguage("Hindi")}
-                                        className={`px-3 py-1 rounded ${
-                                            language === "Hindi"
-                                                ? "bg-blue-600"
-                                                : "bg-slate-700"
-                                        }`}
-                                    >
-                                        हिन्दी
-                                    </button>
+                                    <h2 className="font-display text-3xl font-semibold">
+                                        {storyData.chapter.title}
+                                    </h2>
 
-                                </div>
+                                    <div className="flex flex-wrap items-center gap-3">
 
-                                {!storyData.chapter.game_over && (
+                                        <div className="flex gap-1 bg-ink-950 border border-ink-700 rounded-lg p-1">
 
-                                    <div className="flex gap-3">
+                                            <button
+                                                onClick={() => changeLanguage("English")}
+                                                className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${
+                                                    language === "English"
+                                                        ? "bg-ember-500 text-ink-950"
+                                                        : "text-ash-300 hover:text-ash-100"
+                                                }`}
+                                            >
+                                                English
+                                            </button>
 
-                                        <button
-                                            onClick={pauseResume}
-                                            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg transition"
-                                        >
-                                            {isSpeaking && !isPaused ? (
-                                                <>
-                                                    <Pause size={18} />
-                                                    Pause
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Play size={18} />
-                                                    {isPaused ? "Resume" : "Read"}
-                                                </>
-                                            )}
-                                        </button>
+                                            <button
+                                                onClick={() => changeLanguage("Hindi")}
+                                                className={`px-3 py-1.5 rounded-md text-sm font-medium transition ${
+                                                    language === "Hindi"
+                                                        ? "bg-ember-500 text-ink-950"
+                                                        : "text-ash-300 hover:text-ash-100"
+                                                }`}
+                                            >
+                                                हिन्दी
+                                            </button>
 
-                                        <button
-                                            onClick={stopStory}
-                                            disabled={!isSpeaking}
-                                            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 px-5 py-2 rounded-lg transition"
-                                        >
-                                            <Square size={18} />
-                                            Stop
-                                        </button>
+                                        </div>
 
-                                    </div>
+                                        {!storyData.chapter.game_over && (
 
-                                )}
+                                            <div className="flex gap-2">
 
-                            </div>
+                                                <button
+                                                    onClick={pauseResume}
+                                                    className="flex items-center gap-2 bg-ink-800 hover:bg-ink-700 border border-ink-700 px-4 py-2 rounded-lg transition text-sm font-medium"
+                                                >
+                                                    {isSpeaking && !isPaused ? (
+                                                        <>
+                                                            <Pause size={16} />
+                                                            Pause
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Play size={16} />
+                                                            {isPaused ? "Resume" : "Read"}
+                                                        </>
+                                                    )}
+                                                </button>
 
-                            {translating && (
-
-                                <div className="mb-4 text-blue-400">
-                                    Translating to Hindi...
-                                </div>
-
-                            )}
-
-                            <p className="text-lg leading-9 text-slate-200 whitespace-pre-wrap">
-                                {displayStory}
-                            </p>
-
-                            <div className="mt-12">
-
-                                {storyData.chapter.game_over ? (
-
-                                    <div className="bg-slate-800 border border-red-500 rounded-2xl p-8 text-center">
-
-                                        <h2 className="text-4xl font-bold text-red-400">
-                                            The Story Has Ended
-                                        </h2>
-
-                                        <p className="mt-5 text-lg text-slate-300">
-                                            Your health has reached zero.
-                                        </p>
-
-                                        <p className="mt-2 text-slate-400">
-                                            Your adventure has come to an end.
-                                            Every choice you made shaped this story.
-                                        </p>
-
-                                        <button
-                                            onClick={() => navigate("/create-story")}
-                                            className="mt-8 bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-xl font-semibold transition"
-                                        >
-                                            Create New Story
-                                        </button>
-
-                                    </div>
-
-                                ) : (
-
-                                    <>
-
-                                        <h3 className="text-2xl font-semibold mb-6">
-                                            Choose Your Next Action
-                                        </h3>
-
-                                        {generating && (
-
-                                            <div className="flex items-center gap-3 bg-blue-900/30 border border-blue-600 rounded-xl p-4 mb-6">
-
-                                                <LoaderCircle
-                                                    className="animate-spin"
-                                                    size={22}
-                                                />
-
-                                                <span>
-                                                    Generating the next chapter...
-                                                </span>
+                                                <button
+                                                    onClick={stopStory}
+                                                    disabled={!isSpeaking}
+                                                    className="flex items-center gap-2 bg-danger-600/20 text-danger-400 hover:bg-danger-600/30 disabled:opacity-40 disabled:hover:bg-danger-600/20 border border-danger-600/30 px-4 py-2 rounded-lg transition text-sm font-medium"
+                                                >
+                                                    <Square size={16} />
+                                                    Stop
+                                                </button>
 
                                             </div>
 
                                         )}
 
-                                        <div className="space-y-4">
+                                    </div>
 
-                                            {storyData.chapter.choices.map((choice) => (
+                                </div>
 
-                                                <button
-                                                    key={choice.id}
-                                                    disabled={generating}
-                                                    onClick={() => handleChoice(choice.id)}
-                                                    className={`w-full rounded-xl border p-5 text-left transition ${
-                                                        generating
-                                                            ? "bg-slate-700 border-slate-700 opacity-60 cursor-not-allowed"
-                                                            : "bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-blue-500"
-                                                    }`}
-                                                >
-                                                    {choice.text}
-                                                </button>
+                                {translating && (
 
-                                            ))}
+                                    <div className="mb-4 flex items-center gap-2 text-arcane-400 text-sm">
+                                        <Languages size={16} className="animate-pulse" />
+                                        Translating to Hindi...
+                                    </div>
+
+                                )}
+
+                                <p className="font-prose text-lg leading-9 text-ash-100/90 whitespace-pre-wrap prose-illuminated">
+                                    {displayStory}
+                                </p>
+
+                                <div className="mt-12">
+
+                                    {storyData.chapter.game_over ? (
+
+                                        <div className="bg-ink-950 border border-danger-500/40 rounded-2xl p-8 text-center relative overflow-hidden">
+
+                                            <div
+                                                className="ambient-glow w-64 h-64 bg-danger-500/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                            />
+
+                                            <h2 className="relative font-display text-4xl font-semibold text-danger-400">
+                                                The Story Has Ended
+                                            </h2>
+
+                                            <p className="relative mt-5 text-lg text-ash-100/90">
+                                                Your health has reached zero.
+                                            </p>
+
+                                            <p className="relative mt-2 text-ash-300">
+                                                Your adventure has come to an end.
+                                                Every choice you made shaped this story.
+                                            </p>
+
+                                            <button
+                                                onClick={() => navigate("/create-story")}
+                                                className="relative mt-8 bg-gradient-to-b from-ember-400 to-ember-500 hover:shadow-[0_0_20px_rgba(232,98,44,0.4)] text-ink-950 px-8 py-3 rounded-xl font-semibold transition-all"
+                                            >
+                                                Create New Story
+                                            </button>
 
                                         </div>
 
-                                    </>
+                                    ) : (
 
-                                )}
+                                        <>
+
+                                            <h3 className="font-display text-2xl font-semibold mb-6">
+                                                Choose Your Next Action
+                                            </h3>
+
+                                            {generating && (
+
+                                                <div className="flex items-center gap-3 bg-ember-500/10 border border-ember-500/30 rounded-xl p-4 mb-6">
+
+                                                    <LoaderCircle
+                                                        className="animate-spin text-ember-400"
+                                                        size={20}
+                                                    />
+
+                                                    <span className="text-sm">
+                                                        Generating the next chapter...
+                                                    </span>
+
+                                                </div>
+
+                                            )}
+
+                                            <div className="space-y-3">
+
+                                                {storyData.chapter.choices.map((choice) => (
+
+                                                    <button
+                                                        key={choice.id}
+                                                        disabled={generating}
+                                                        onClick={() => handleChoice(choice.id)}
+                                                        className={`group w-full flex items-center gap-4 rounded-xl border p-5 text-left transition-all ${
+                                                            generating
+                                                                ? "bg-ink-900 border-ink-700 opacity-50 cursor-not-allowed"
+                                                                : "bg-ink-900 border-ink-700 hover:border-ember-500/60 hover:bg-ink-800 hover:translate-x-1"
+                                                        }`}
+                                                    >
+                                                        <span
+                                                            className={`shrink-0 w-1 self-stretch rounded-full transition-colors ${
+                                                                generating
+                                                                    ? "bg-ink-700"
+                                                                    : "bg-ink-700 group-hover:bg-ember-500"
+                                                            }`}
+                                                        />
+
+                                                        <span className="flex-1 text-ash-100/90">
+                                                            {choice.text}
+                                                        </span>
+
+                                                        <ArrowRight
+                                                            size={18}
+                                                            className={`shrink-0 text-ash-500 transition-all ${
+                                                                generating
+                                                                    ? ""
+                                                                    : "group-hover:text-ember-400 group-hover:translate-x-1"
+                                                            }`}
+                                                        />
+                                                    </button>
+
+                                                ))}
+
+                                            </div>
+
+                                        </>
+
+                                    )}
+
+                                </div>
 
                             </div>
 

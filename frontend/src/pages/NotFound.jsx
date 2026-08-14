@@ -6,18 +6,23 @@ export default function NotFound() {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-slate-950 flex items-center justify-center px-6">
-            <div className="text-center">
+        <div className="min-h-screen bg-ink-950 flex items-center justify-center px-6 relative overflow-hidden">
+
+            <div
+                className="ambient-glow w-96 h-96 bg-ember-500/15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            />
+
+            <div className="relative text-center">
                 <Compass
-                    size={56}
-                    className="mx-auto text-blue-500 mb-6"
+                    size={52}
+                    className="mx-auto text-ember-400 mb-6"
                 />
 
-                <h1 className="text-5xl font-bold text-white">
+                <h1 className="font-display text-5xl font-semibold text-ash-100">
                     Lost in the story
                 </h1>
 
-                <p className="text-slate-400 mt-4 text-lg">
+                <p className="text-ash-300 mt-4 text-lg">
                     This page doesn't exist.
                 </p>
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import { BookOpen, Mail, Lock } from "lucide-react";
+import { Flame, Mail, Lock } from "lucide-react";
 
 import { login } from "../services/authService";
 import { useAuth } from "../hooks/useAuth";
@@ -56,29 +56,36 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen flex justify-center items-center bg-slate-950 px-6">
+        <div className="min-h-screen flex justify-center items-center bg-ink-950 px-6 relative overflow-hidden">
+
+            <div
+                className="ambient-glow w-[32rem] h-[32rem] bg-ember-500/15 top-1/4 left-1/2 -translate-x-1/2"
+            />
+            <div
+                className="ambient-glow w-72 h-72 bg-arcane-500/10 bottom-0 right-0"
+            />
 
             <form
                 onSubmit={handleSubmit}
-                className="bg-slate-900 border border-slate-800 p-10 rounded-2xl shadow-2xl w-full max-w-md"
+                className="relative bg-ink-900 border border-ink-700 p-10 rounded-2xl shadow-2xl w-full max-w-md"
             >
 
                 <div className="flex flex-col items-center mb-8">
-                    <BookOpen size={40} className="text-blue-500 mb-3" />
-                    <h1 className="text-3xl font-bold text-white">
+                    <Flame size={40} className="text-ember-500 mb-3" />
+                    <h1 className="font-display text-3xl font-semibold text-ash-100">
                         StoryForge AI
                     </h1>
-                    <p className="text-slate-400 mt-2 text-center">
+                    <p className="text-ash-300 mt-2 text-center">
                         Welcome back, adventurer.
                     </p>
                 </div>
 
-                <label className="text-slate-300 text-sm mb-2 flex items-center gap-2">
+                <label className="text-ash-300 text-sm mb-2 flex items-center gap-2">
                     <Mail size={16} />
                     Email
                 </label>
                 <input
-                    className="bg-slate-800 border border-slate-700 text-white p-3 w-full mb-5 rounded-lg outline-none focus:border-blue-500 transition"
+                    className="bg-ink-950 border border-ink-700 text-ash-100 p-3 w-full mb-5 rounded-lg outline-none focus:border-ember-500 transition"
                     type="email"
                     name="email"
                     placeholder="you@example.com"
@@ -87,12 +94,12 @@ export default function Login() {
                     required
                 />
 
-                <label className="text-slate-300 text-sm mb-2 flex items-center gap-2">
+                <label className="text-ash-300 text-sm mb-2 flex items-center gap-2">
                     <Lock size={16} />
                     Password
                 </label>
                 <input
-                    className="bg-slate-800 border border-slate-700 text-white p-3 w-full mb-8 rounded-lg outline-none focus:border-blue-500 transition"
+                    className="bg-ink-950 border border-ink-700 text-ash-100 p-3 w-full mb-8 rounded-lg outline-none focus:border-ember-500 transition"
                     type="password"
                     name="password"
                     placeholder="Your password"
@@ -104,15 +111,15 @@ export default function Login() {
                 <button
                     type="submit"
                     disabled={submitting}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white w-full p-3 rounded-lg font-medium transition"
+                    className="bg-gradient-to-b from-ember-400 to-ember-500 hover:shadow-[0_0_20px_rgba(232,98,44,0.4)] disabled:opacity-50 disabled:cursor-not-allowed text-ink-950 w-full p-3 rounded-lg font-semibold transition-all"
                 >
                     {submitting ? "Logging in..." : "Login"}
                 </button>
 
-                <p className="mt-6 text-center text-slate-400">
+                <p className="mt-6 text-center text-ash-300">
                     Don't have an account?
                     <Link
-                        className="text-blue-400 hover:text-blue-300 ml-2"
+                        className="text-ember-400 hover:text-ember-300 ml-2 font-medium"
                         to="/register"
                     >
                         Register

@@ -43,7 +43,7 @@ export default function Dashboard() {
 
     return (
 
-        <div className="min-h-screen bg-slate-950">
+        <div className="min-h-screen bg-ink-950">
 
             <Navbar />
 
@@ -55,11 +55,11 @@ export default function Dashboard() {
 
                     <div>
 
-                        <h1 className="text-5xl font-bold text-white">
+                        <h1 className="font-display text-5xl font-semibold text-ash-100">
                             Welcome Back
                         </h1>
 
-                        <p className="text-slate-400 mt-3 text-lg">
+                        <p className="text-ash-300 mt-3 text-lg">
                             Continue your adventures or create a brand new story.
                         </p>
 
@@ -84,17 +84,17 @@ export default function Dashboard() {
                 <div className="flex items-center gap-3 mt-14 mb-8">
 
                     <BookOpen
-                        size={26}
-                        className="text-blue-400"
+                        size={24}
+                        className="text-ember-400"
                     />
 
-                    <h2 className="text-3xl font-bold text-white">
+                    <h2 className="font-display text-3xl font-semibold text-ash-100">
                         Your Stories
                     </h2>
 
                 </div>
 
-                {/* Empty State */}
+                {/* Empty / Loading State */}
 
                 {
                     loading ? (
@@ -102,21 +102,21 @@ export default function Dashboard() {
                         <div className="flex justify-center py-24">
                             <LoaderCircle
                                 size={32}
-                                className="animate-spin text-blue-500"
+                                className="animate-spin text-ember-500"
                             />
                         </div>
 
                     ) : stories.length === 0 ? (
 
-                        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-16 text-center">
+                        <div className="bg-ink-900 border border-ink-700 rounded-2xl p-16 text-center">
 
-                            <h3 className="text-2xl font-semibold text-white">
+                            <h3 className="font-display text-2xl font-semibold text-ash-100">
 
                                 No stories yet
 
                             </h3>
 
-                            <p className="text-slate-400 mt-3">
+                            <p className="text-ash-300 mt-3">
 
                                 Click "Create Story" to begin your first adventure.
 

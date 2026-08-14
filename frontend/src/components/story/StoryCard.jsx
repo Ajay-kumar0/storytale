@@ -9,18 +9,18 @@ export default function StoryCard({ story }) {
 
         <div
             onClick={() => navigate(`/story/${story._id}`)}
-            className="group bg-slate-900 border border-slate-800 rounded-2xl p-6 cursor-pointer hover:border-blue-500 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+            className="group relative bg-ink-900 border border-ink-700 rounded-2xl p-6 cursor-pointer hover:border-ember-500/60 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(232,98,44,0.15)] transition-all duration-300"
         >
 
-            <div className="flex justify-between items-start">
+            <div className="flex justify-between items-start gap-4">
 
-                <h2 className="text-2xl font-bold text-white group-hover:text-blue-400 transition">
+                <h2 className="font-display text-2xl font-semibold text-ash-100 group-hover:text-ember-400 transition-colors">
 
                     {story.title}
 
                 </h2>
 
-                <span className="bg-blue-600 text-sm px-3 py-1 rounded-full">
+                <span className="shrink-0 bg-ember-500/15 text-ember-400 border border-ember-500/30 text-xs font-semibold px-3 py-1 rounded-full">
 
                     {story.genre}
 
@@ -30,17 +30,17 @@ export default function StoryCard({ story }) {
 
             <div className="mt-6 space-y-3">
 
-                <div className="flex items-center gap-3 text-slate-300">
+                <div className="flex items-center gap-3 text-ash-300 text-sm">
 
-                    <User size={18} />
+                    <User size={16} className="text-ash-500" />
 
                     <span>{story.character_name}</span>
 
                 </div>
 
-                <div className="flex items-center gap-3 text-slate-300">
+                <div className="flex items-center gap-3 text-ash-300 text-sm">
 
-                    <BookOpen size={18} />
+                    <BookOpen size={16} className="text-ash-500" />
 
                     <span>Chapter {story.current_chapter}</span>
 
@@ -50,15 +50,18 @@ export default function StoryCard({ story }) {
 
             <div className="mt-8 flex justify-end">
 
-                <button
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition"
+                <span
+                    className="flex items-center gap-2 text-ember-400 group-hover:text-ember-300 font-medium text-sm transition-colors"
                 >
 
                     Continue
 
-                    <ArrowRight size={18} />
+                    <ArrowRight
+                        size={16}
+                        className="group-hover:translate-x-1 transition-transform"
+                    />
 
-                </button>
+                </span>
 
             </div>
 

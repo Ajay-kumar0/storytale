@@ -1,4 +1,4 @@
-import { BookOpen, Home, PlusCircle, LogOut } from "lucide-react";
+import { Flame, Home, PlusCircle, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -16,7 +16,7 @@ export default function Navbar() {
 
     return (
 
-        <nav className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur border-b border-slate-800">
+        <nav className="sticky top-0 z-50 bg-ink-900/90 backdrop-blur border-b border-ink-700">
 
             <div className="max-w-7xl mx-auto flex justify-between items-center px-8 py-5">
 
@@ -24,15 +24,15 @@ export default function Navbar() {
 
                 <div
                     onClick={() => navigate("/dashboard")}
-                    className="flex items-center gap-3 cursor-pointer"
+                    className="flex items-center gap-3 cursor-pointer group"
                 >
 
-                    <BookOpen
-                        size={30}
-                        className="text-blue-500"
+                    <Flame
+                        size={28}
+                        className="text-ember-500 group-hover:text-ember-400 transition"
                     />
 
-                    <h1 className="text-2xl font-bold text-white">
+                    <h1 className="font-display text-2xl font-semibold text-ash-100 tracking-tight">
                         StoryForge AI
                     </h1>
 
@@ -40,15 +40,15 @@ export default function Navbar() {
 
                 {/* Navigation */}
 
-                <div className="flex items-center gap-8">
+                <div className="flex items-center gap-8 font-medium text-sm">
 
                     <NavLink
                         to="/dashboard"
                         className={({ isActive }) =>
                             `flex items-center gap-2 transition ${
                                 isActive
-                                    ? "text-blue-400"
-                                    : "text-slate-300 hover:text-white"
+                                    ? "text-ember-400"
+                                    : "text-ash-300 hover:text-ash-100"
                             }`
                         }
                     >
@@ -61,8 +61,8 @@ export default function Navbar() {
                         className={({ isActive }) =>
                             `flex items-center gap-2 transition ${
                                 isActive
-                                    ? "text-blue-400"
-                                    : "text-slate-300 hover:text-white"
+                                    ? "text-ember-400"
+                                    : "text-ash-300 hover:text-ash-100"
                             }`
                         }
                     >
@@ -72,7 +72,7 @@ export default function Navbar() {
 
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-2 text-slate-300 hover:text-red-400 transition"
+                        className="flex items-center gap-2 text-ash-300 hover:text-danger-400 transition"
                     >
                         <LogOut size={18} />
                         Logout
